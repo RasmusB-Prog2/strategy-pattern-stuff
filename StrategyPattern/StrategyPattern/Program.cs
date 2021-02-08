@@ -1,38 +1,38 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
+using Autofac;
+using StrategyPattern.services;
 
 namespace StrategyPattern
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+
+        private const string Path = "/home/hackerbuddy/repos/strategy-pattern-stuff/StrategyPattern/StrategyPattern/menu.ui";
+        
+        private static void Main(string[] args)
         {
-            PrintMenu();
-            HandleMenuInput();
+            var container = BuildDependencyContainer();
+            var app = container.Resolve<Application>();
+            app.Run();
         }
-        static void PrintMenu()
+
+        private static IContainer BuildDependencyContainer()
         {
-            Console.WriteLine("You need to go somewhere else, what do you do?");
-            Console.WriteLine("1. Walk");
-            Console.WriteLine("2. Run");
-            Console.WriteLine("3. Fly");
+            var builder = new ContainerBuilder();
+
+            builder.RegisterType<Presenter>().As<IPresents>().InstancePerLifetimeScope();
+            builder.RegisterType<MovementStrategyFactory>().As<IMovementStrategyFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<UiService>().As<IUiService>().InstancePerLifetimeScope();
+
+            builder.RegisterType<Application>().AsSelf().InstancePerLifetimeScope();
+            
+            return builder.Build();
         }
-        static void HandleMenuInput()
-        {
-            switch (Console.ReadLine())
-            {
-                case "1":
-                    WalkStrategy walker = new WalkStrategy();
-                    walker.Move(1, "left");
-                    break;
-                case "2":
-                    RunStrategy runner = new RunStrategy();
-                    runner.Move(3, "right");
-                    break;
-                case "3":
-                    FlyStrategy flyer = new FlyStrategy();
-                    flyer.Move(120, "west");
-                    break;
-            }
-        }
+
+
+
+
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StrategyPattern
 {
-    interface IMovementStrategy
+    public interface IMovementStrategy
     {
         void Move(double velocity, string direction);
     }

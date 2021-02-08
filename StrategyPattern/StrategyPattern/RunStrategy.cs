@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using StrategyPattern.services;
 
 namespace StrategyPattern
 {
-    class RunStrategy : IMovementStrategy
+    class RunStrategy : MovementStrategy
     {
-        public void Move(double velocity, string direction)
-        {
-            Console.WriteLine("Running towards {0} at {1} m/s", direction, velocity);
-        }
+        public RunStrategy(IPresents presenter) : base("Running towards {0} at {1} m/s", presenter) { }
     }
 }
