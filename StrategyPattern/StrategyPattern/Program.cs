@@ -6,7 +6,10 @@ namespace StrategyPattern
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            WalkStrategy walker = new WalkStrategy();
+            walker.Move(1, "left");
+
+
         }
     }
 }
